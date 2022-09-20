@@ -35,8 +35,6 @@ def ocr_text_extraction(img_path):
     with Path('TEXT\\'+img_path[3:-4]+'.txt').open('w', encoding = 'utf-8') as op_file:
             op_file.write(res)
 
-binary_extraction('PDF\\BRS.pdf')
-pdf2img('PDF\\Marathi.pdf')
+
 pdf2img('PDF\\Receipt.pdf')
 ocr_text_extraction("IMG\\Receipt-0.jpg")
-ocr_text_extraction("IMG\\Marathi-5.jpg")
