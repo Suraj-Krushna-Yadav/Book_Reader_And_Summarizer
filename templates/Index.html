@@ -1,16 +1,38 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Reader and Summaraizer</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Book reader and summarizer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 </head>
 
 <body>
+    <div style="margin-left:20% ;margin-Right:20% ;text-align: center;">
+        <!-- As a heading -->
+        <h1>Book reader and summarizer</h1>
+    </div>
 
-    <Div style="text-align: center;">
+    <div style="margin-left:20% ;margin-Right:20% ;margin-top: 5%;">
+        <div class="mb-3">
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <label for="myfile" class="form-label">Default file input example</label>
+                <input class="form-control" type="file" id="myfile" name="myfile">
+                <br>
+                <button type="submit" class="btn btn-primary mb-3">Upload</button>
+            </form>
+            <div>
+                <button type="submit" class="btn btn-primary mb-3">Show Text</button>
+                <button type="submit" class="btn btn-primary mb-3">Play Audio</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ---------------------------------------------------------------------------------------------- -->
+    <!-- <Div style="text-align: center;">
         <form action="/upload" method="post" enctype="multipart/form-data">
             <h1>Well Come</h1>
             <label for="myfile">Select a file:</label>
@@ -19,8 +41,15 @@
             <br>
             <button type="submit">Upload file</button>
         </form>
-    </Div>
+    </Div> -->
 
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
