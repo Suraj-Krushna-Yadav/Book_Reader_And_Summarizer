@@ -7,7 +7,8 @@ import os
 app = Flask(__name__)
 
 # path to save PDF Files
-app.config["PDF_PATH"] = "C:\\Users\\Pratiksha Wagh\\Desktop\\Book Reader and summarizer\\static\\pdf"
+# Add the path of your pdf folder
+app.config["PDF_PATH"] = "C:\\Users\\Pratiksha Wagh\\Desktop\\Github Repos\\Book_Reader_And_Summarizer\\PDF"
 
 # file extension funcyion is not completed yet
 app.config["FILE_EXTENSION"] = ["PDF", ]
