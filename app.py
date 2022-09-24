@@ -35,5 +35,11 @@ def Home():
     return render_template('Index.html')
 
 
+@app.route('/upload/Text', methods=['POST'])
+def upload_text():
+    res = "There will be texthhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"
+    return render_template('text.html', result=res)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
