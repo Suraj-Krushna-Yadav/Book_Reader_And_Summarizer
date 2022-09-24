@@ -52,9 +52,9 @@ def pdf2img2txt(pdf_path):
     for i in range(len(images)):
 
         # Save pages as images in the pdf
-        images[i].save('Files\\IMG\\'+pdf_path[:-4]+'-'+str(i)+'.jpg','JPEG')
+        images[i].save('Files\\IMG\\'+pdf_path[9:-4]+'-'+str(i)+'.jpg','JPEG')
 
-        img = Image.open('Files\\IMG\\'+pdf_path[:-4]+'-'+str(i)+'.jpg')
+        img = Image.open('Files\\IMG\\'+pdf_path[9:-4]+'-'+str(i)+'.jpg')
 
         full_text += "\n"
         res = pytesseract.image_to_string(img)              # for english
@@ -62,13 +62,14 @@ def pdf2img2txt(pdf_path):
 
         #res = pytesseract.image_to_string(img, lang="hin") # for hindi
 
-        with Path('Files\\TEXT\\'+pdf_path[:-4]+'-'+str(i)+'.txt').open('w', encoding = 'utf-8') as op_file:
+        with Path('Files\\TEXT\\'+pdf_path[9:-4]+'-'+str(i)+'.txt').open('w', encoding = 'utf-8') as op_file:
             op_file.write(res)
 
-    with Path('Files\\TEXT\\'+pdf_path[:-4]+'.txt').open('w', encoding = 'utf-8') as op_file:
+    with Path('Files\\TEXT\\'+pdf_path[9:-4]+'.txt').open('w', encoding = 'utf-8') as op_file:
         op_file.write(full_text)
+    return full_text
 
 
-pdf2img2txt("BRS_PPT_1.pdf")
+# pdf2img2txt("BRS_PPT_1.pdf")
 # pdf2img("Receipt.pdf")
 # ocr_text_extraction("Receipt-0.jpg")

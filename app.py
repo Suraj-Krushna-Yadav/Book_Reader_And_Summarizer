@@ -2,8 +2,10 @@
 from wsgiref.util import request_uri
 from flask import Flask
 from flask import render_template, request, redirect
+import Functions
 import os
-
+global res
+res = ''
 app = Flask(__name__)
 
 # path to save PDF Files
@@ -17,6 +19,11 @@ app.config["FILE_EXTENSION"] = ["PDF", ]
 @app.route('/')
 @app.route('/upload', methods=["POST", "GET"])
 def Home():
+    # try:
+    #     entries = os.listdir("Files\\PDF\\")
+    #     os.remove("Files\\PDF\\"+str(entries[0]))
+    # except:
+    #     pass
     if request.method == "POST":
         if request.files:
 
@@ -25,7 +32,7 @@ def Home():
             if myFile.filename == "":
                 print("Must have filename")
                 return redirect(request_uri)
-
+           
             # saving  file to pdf location
             myFile.save(os.path.join(app.config["PDF_PATH"], myFile.filename))
 
@@ -37,7 +44,9 @@ def Home():
 
 @app.route('/upload/Text', methods=['POST'])
 def upload_text():
-    res = "There will be texthhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"
+    entries = os.listdir("Files\\PDF\\")
+    pdf = "Files\\PDF\\"+str(entries[0]) 
+    res = Functions.pdf2img2txt(pdf)
     return render_template('text.html', result=res)
 
 
