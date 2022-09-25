@@ -4,8 +4,11 @@ from flask import Flask
 from flask import render_template, request, redirect
 import Functions
 import os
-global res
-res = ''
+
+try : Functions.mkres() # For covinience to create empty directories initially
+except: pass
+
+
 app = Flask(__name__)
 
 # path to save PDF Files
