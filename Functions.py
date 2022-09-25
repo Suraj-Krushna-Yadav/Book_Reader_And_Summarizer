@@ -3,6 +3,7 @@ import pytesseract
 from PIL import Image
 import PyPDF2 as p2
 from pdf2image import convert_from_path
+import os
 
 
 
@@ -58,9 +59,8 @@ def pdf2img2txt(pdf_path):
 
         full_text += "\n"
         res = pytesseract.image_to_string(img)              # for english
-        full_text += res
-
         #res = pytesseract.image_to_string(img, lang="hin") # for hindi
+        full_text += res
 
         with Path('Resources\\TEXT\\'+pdf_name+'-'+str(i)+'.txt').open('w', encoding = 'utf-8') as op_file:
             op_file.write(res)
@@ -70,6 +70,17 @@ def pdf2img2txt(pdf_path):
     return full_text
 
 
-# pdf2img2txt("BRS_PPT_1.pdf")
-# pdf2img("Receipt.pdf")
-# ocr_text_extraction("Receipt-0.jpg")
+
+
+def validate_resources_directory():
+    try :
+        os.mkdir("Resources")
+        validate_sub_resources_directory()
+    except :
+        validate_sub_resources_directory()
+
+def validate_sub_resources_directory(): 
+    entries = os.listdir("Resources\\")
+    for sub_resource in "IMG",'PDF','TEXT','SUMMARY','AUDIO':
+        if sub_resource not in entries:
+            os.mkdir("Resources\\"+str(sub_resource))
