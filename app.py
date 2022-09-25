@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 # path to save PDF Files
 # Add the path of your pdf folder
-app.config["PDF_PATH"] = "Files\\PDF"
+app.config["PDF_PATH"] = "Resources\\PDF"
 
 # file extension funcyion is not completed yet
 app.config["FILE_EXTENSION"] = ["PDF", ]
@@ -44,8 +44,8 @@ def Home():
 
 @app.route('/upload/Text', methods=['POST'])
 def upload_text():
-    entries = os.listdir("Files\\PDF\\")
-    pdf = "Files\\PDF\\"+str(entries[0]) 
+    entries = os.listdir("Resources\\PDF\\")
+    pdf = "Resources\\PDF\\"+str(entries[0]) 
     res = Functions.pdf2img2txt(pdf)
     return render_template('text.html', result=res)
 
