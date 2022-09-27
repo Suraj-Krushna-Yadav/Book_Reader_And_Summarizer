@@ -19,6 +19,7 @@ app.config["PDF_PATH"] = "Resources\\PDF"
 app.config["FILE_EXTENSION"] = ["PDF", ]
 
 
+
 @app.route('/')
 @app.route('/upload', methods=["POST", "GET"])
 def Home():
