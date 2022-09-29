@@ -5,7 +5,7 @@ from flask import render_template, request, redirect
 import Functions
 import os
 
-try : Functions.mkres() # For covinience to create empty directories initially
+try : Functions.validate_resources_directory() # For covinience to create empty directories initially
 except: pass
 
 
