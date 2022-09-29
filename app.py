@@ -1,4 +1,6 @@
 # from crypt import methods
+from turtle import heading
+from unittest import result
 from wsgiref.util import request_uri
 from flask import Flask
 from flask import render_template, request, redirect
@@ -20,13 +22,11 @@ app.config["FILE_EXTENSION"] = ["PDF", ]
 
 
 @app.route('/')
+def start():
+    return render_template('Index.html')
+    
 @app.route('/upload', methods=["POST", "GET"])
 def Home():
-    # try:
-    #     entries = os.listdir("Files\\PDF\\")
-    #     os.remove("Files\\PDF\\"+str(entries[0]))
-    # except:
-    #     pass
     if request.method == "POST":
         if request.files:
 
@@ -34,7 +34,7 @@ def Home():
 
             if myFile.filename == "":
                 print("Must have filename")
-                return redirect(request_uri)
+                return render_template('text.html', heading = "PDF not selected")
            
             # saving  file to pdf location
             myFile.save(os.path.join(app.config["PDF_PATH"], myFile.filename))
@@ -42,16 +42,25 @@ def Home():
             print("File uploaded sucessfully...")
             return redirect(request.url)
 
-    return render_template('Index.html')
+    try:
+        entries = os.listdir("Resources\\PDF\\")
+        pdf = entries[0]
+    except:
+        pdf = '----'
+    return render_template('upload.html',pdf_name=pdf)
 
 
 @app.route('/upload/Text', methods=['POST'])
-def upload_text():
-    entries = os.listdir("Resources\\PDF\\")
-    pdf = "Resources\\PDF\\"+str(entries[0]) 
-    res = Functions.pdf2img2txt(pdf)
-    return render_template('text.html', result=res)
-
+def show_text():
+    try :
+        entries = os.listdir("Resources\\PDF\\")
+        pdfname=entries[0]
+        pdf = "Resources\\PDF\\"+str(entries[0]) 
+        res = Functions.pdf2img2txt(pdf)
+        os.remove(pdf)
+        return render_template('text.html', result = res, pdf_name = pdfname)
+    except:
+        return render_template('text.html', heading = "PDF not uploaded")
 
 if __name__ == '__main__':
     app.run(debug=True)
