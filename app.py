@@ -9,6 +9,7 @@ import os
 import shutil
 
 try : 
+    fn.create_null_db()
     fn.validate_resources_directory() # For covinience to create empty directories initially
 except: 
     pass

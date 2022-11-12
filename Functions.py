@@ -4,7 +4,30 @@ from PIL import Image
 import PyPDF2 as p2
 from pdf2image import convert_from_path
 import os
-
+import sqlite3
+def create_null_db(): 
+    conn = sqlite3.connect('DATABASE.sqlite3')
+    conn.execute('''CREATE TABLE IF NOT EXISTS MultiFile(
+        file_id INTEGER PRIMARY KEY,
+        file_type text,
+        file_name text,
+        text_path text,
+        audio_path text,
+        summary_path text,
+        summary_audio_path text
+        );
+                    ''')
+    conn.execute('''CREATE TABLE IF NOT EXISTS Book(
+        file_id INTEGER PRIMARY KEY,
+        pdf_name text,
+        page_no integer,
+        img_path text
+        text_path text,
+        audio_path text,
+        summary_path text,
+        summary_audio_path text
+        );
+                    ''')
 
 
 def binary_extraction(pdf_path):
