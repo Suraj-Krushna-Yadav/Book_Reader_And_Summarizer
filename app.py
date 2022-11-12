@@ -4,12 +4,14 @@ from unittest import result
 from wsgiref.util import request_uri
 from flask import Flask
 from flask import render_template, request, redirect
-import Functions
+import Functions as fn
 import os
 import shutil
 
-try : Functions.validate_resources_directory() # For covinience to create empty directories initially
-except: pass
+try : 
+    fn.validate_resources_directory() # For covinience to create empty directories initially
+except: 
+    pass
 
 
 app = Flask(__name__)
@@ -45,21 +47,21 @@ def Home():
 
     try:
         entries = os.listdir("Resources\\PDF\\")
-        pdf = entries[0]
+        global pdfname
+        pdfname = entries[0]
     except:
         pdf = '----'
-    return render_template('upload.html',pdf_name=pdf)
+    return render_template('upload.html',pdf_name=pdfname)
 
 
 @app.route('/upload/Text', methods=['POST'])
 def show_text():
     try :
-        entries = os.listdir("Resources\\PDF\\")
-        pdfname=entries[0]
-        pdf = "Resources\\PDF\\"+str(entries[0]) 
-        res = Functions.pdf2img2txt(pdf)
-        shutil.move(pdf,"Resources\\PROCESSED PDF")
-        os.remove(pdf)
+        # entries = os.listdir("Resources\\PDF\\")
+        # pdfname=entries[0]
+        pdf_path = "Resources\\PDF\\"+str(pdfname)
+        res = fn.pdf2img2txt(pdf_path)
+        shutil.move(pdf_path,"Resources\\PROCESSED PDF")
         return render_template('text.html', result = res, pdf_name = pdfname)
     except:
         return render_template('text.html', heading = "PDF not uploaded")
