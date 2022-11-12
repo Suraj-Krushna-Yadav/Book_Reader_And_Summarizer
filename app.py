@@ -6,6 +6,7 @@ from flask import Flask
 from flask import render_template, request, redirect
 import Functions
 import os
+import shutil
 
 try : Functions.validate_resources_directory() # For covinience to create empty directories initially
 except: pass
@@ -57,6 +58,7 @@ def show_text():
         pdfname=entries[0]
         pdf = "Resources\\PDF\\"+str(entries[0]) 
         res = Functions.pdf2img2txt(pdf)
+        shutil.move(pdf,"Resources\\PROCESSED PDF")
         os.remove(pdf)
         return render_template('text.html', result = res, pdf_name = pdfname)
     except:

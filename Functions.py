@@ -81,6 +81,6 @@ def validate_resources_directory():
 
 def validate_sub_resources_directory(): 
     entries = os.listdir("Resources\\")
-    for sub_resource in "IMG",'PDF','TEXT','SUMMARY','AUDIO':
+    for sub_resource in "IMG",'PDF','TEXT','SUMMARY','AUDIO', "PROCESSED PDF":
         if sub_resource not in entries:
             os.mkdir("Resources\\"+str(sub_resource))
