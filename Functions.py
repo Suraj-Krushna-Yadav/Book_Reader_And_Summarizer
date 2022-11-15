@@ -5,30 +5,52 @@ import PyPDF2 as p2
 from pdf2image import convert_from_path
 import os
 import sqlite3
-def create_null_db(): 
+
+def cn():
     conn = sqlite3.connect('DATABASE.sqlite3')
-    conn.execute('''CREATE TABLE IF NOT EXISTS MultiFile(
-        file_id INTEGER PRIMARY KEY,
+    return conn
+
+def create_null_db(): 
+    conn = cn()
+    conn.execute('''create table if not exists book(
+        id integer primary key,
         file_type text,
         file_name text,
-        text_path text,
-        audio_path text,
-        summary_path text,
-        summary_audio_path text
-        );
-                    ''')
-    conn.execute('''CREATE TABLE IF NOT EXISTS Book(
-        file_id INTEGER PRIMARY KEY,
-        pdf_name text,
+        total_pgs integer,
         page_no integer,
-        img_path text
         text_path text,
         audio_path text,
         summary_path text,
         summary_audio_path text
         );
                     ''')
+    conn.execute('''CREATE TABLE IF NOT EXISTS other(
+        counter integer,
+        password text
+        );
+                    ''')
+    conn.commit()
+    initialize_counter()
 
+def initialize_counter():
+    conn = cn()
+    query = "INSERT INTO other(counter) VALUES(0);"
+    conn.execute(query)
+    conn.commit()
+
+def get_counter():
+    conn =cn()
+    query = "select counter from other;"
+    for i in conn.execute(query): return i[0]
+
+def set_counter(val):
+    conn=cn()
+    query = "update other set counter = ?;"
+    conn.execute(query,(val,))
+    conn.commit()
+
+def increment_counter():
+    set_counter(get_counter()+1)
 
 def binary_extraction(pdf_path):
     pdf2 = p2.PdfFileReader(pdf_path)   # Using PyPDF2 for Text Extraction

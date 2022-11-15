@@ -11,7 +11,8 @@ import shutil
 try : 
     fn.create_null_db()
     fn.validate_resources_directory() # For covinience to create empty directories initially
-except: 
+except Exception as e:
+    print(e)
     pass
 
 
@@ -50,6 +51,10 @@ def Home():
         entries = os.listdir("Resources\\PDF\\")
         global pdfname
         pdfname = entries[0]
+        global counter
+        c = fn.get_counter()
+        counter += c
+        fn.add_f_id_type_name(counter,'PDF',pdfname)
     except:
         pdf = '----'
     return render_template('upload.html',pdf_name=pdfname)
@@ -58,8 +63,6 @@ def Home():
 @app.route('/upload/Text', methods=['POST'])
 def show_text():
     try :
-        # entries = os.listdir("Resources\\PDF\\")
-        # pdfname=entries[0]
         pdf_path = "Resources\\PDF\\"+str(pdfname)
         res = fn.pdf2img2txt(pdf_path)
         shutil.move(pdf_path,"Resources\\PROCESSED PDF")
