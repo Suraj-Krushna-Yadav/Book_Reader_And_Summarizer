@@ -51,10 +51,13 @@ def Home():
         entries = os.listdir("Resources\\PDF\\")
         global pdfname
         pdfname = entries[0]
-        global counter
-        c = fn.get_counter()
-        counter += c
-        fn.add_f_id_type_name(counter,'PDF',pdfname)
+        # if ".pdf" in pdfname:type="PDF"
+        # elif ".img" in pdfname or "jpg" in pdfname or "jpeg" in pdfname or ".png" in pdfname: type = "IMG"
+        # elif ".txt" in pdfname : type = "TEXT"
+        # global counter
+        # fn.increment_counter()
+        # counter = fn.get_counter()
+        # fn.add_id_type_name(counter,type,pdfname)
     except:
         pdf = '----'
     return render_template('upload.html',pdf_name=pdfname)
