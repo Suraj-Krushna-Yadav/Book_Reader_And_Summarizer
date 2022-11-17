@@ -7,6 +7,8 @@ import os
 
 
 
+
+
 def binary_extraction(pdf_path):
     pdf2 = p2.PdfFileReader(pdf_path)   # Using PyPDF2 for Text Extraction
     pdf_name = pdf_path[13:-4]
