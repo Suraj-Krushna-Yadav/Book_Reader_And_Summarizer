@@ -127,7 +127,7 @@ def pdf2img2txt(pdf_path):
     full_text = ""
 
     images = convert_from_path(pdf_path, poppler_path=r'C:\\poppler-0.68.0\bin')
-    pytesseract.pytesseract.tesseract_cmd="C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
+    pytesseract.pytesseract.tesseract_cmd="D:\ASUS\Desktop\Tesseract-OCR\tesseract.exe"
 
     no_img = len(images)
 
