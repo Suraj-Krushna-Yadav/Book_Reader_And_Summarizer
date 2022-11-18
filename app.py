@@ -70,7 +70,8 @@ def show_text():
         res = fn.pdf2img2txt(pdf_path)
         shutil.move(pdf_path,"Resources\\PROCESSED PDF")
         return render_template('text.html', result = res, pdf_name = pdfname)
-    except:
+    except Exception as e:
+        print("Error during show text is\n",e)
         return render_template('text.html', heading = "PDF not uploaded")
 
 if __name__ == '__main__':
