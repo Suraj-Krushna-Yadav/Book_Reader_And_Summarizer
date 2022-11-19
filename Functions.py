@@ -149,18 +149,15 @@ def pdf2img2txt(pdf_path):
         text_path = 'Resources\\TEXT\\'+pdf_name+'-'+str(i)+'.txt'
         with Path(text_path).open('w', encoding = 'utf-8') as op_file:
             op_file.write(res)
-        try:
-          fill_row(counter,"PDF",pdf_name,no_img,i+1,img_path,text_path)
-        except Exception as e:
-            print("\n\n1st Erroer due to : ",e)
-        try:
-            increment_counter()
-        except Exception as e:
-            print("\n\n2nd Erroer due to : ",e)
-
+        fill_row(counter,"PDF",pdf_name,no_img,i+1,img_path,text_path)
+        increment_counter()
+        
+    counter = get_counter()
     full_text_path = 'Resources\\TEXT\\'+pdf_name+'.txt'
     with Path(full_text_path).open('w', encoding = 'utf-8') as op_file:
         op_file.write(full_text)
+    fill_row(counter,"PDF",pdf_name,no_img,0,"",full_text_path)
+    increment_counter()
     return full_text
 
 
