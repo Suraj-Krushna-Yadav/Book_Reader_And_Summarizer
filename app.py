@@ -68,11 +68,18 @@ def show_text():
     try :
         pdf_path = "Resources\\PDF\\"+str(pdfname)
         res = fn.pdf2img2txt(pdf_path)
-        shutil.move(pdf_path,"Resources\\PROCESSED PDF")
+        try:
+            shutil.move(pdf_path,"Resources\\PROCESSED PDF")
+        except:pass
         return render_template('text.html', result = res, pdf_name = pdfname)
     except Exception as e:
         print("Error during show text is\n",e)
         return render_template('text.html', heading = "PDF not uploaded")
+
+@app.route('/upload/Text/audio', methods=['POST'])
+def play_audio():
+    return render_template('textaudio.html', pdf_name = pdfname)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

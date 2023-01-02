@@ -18,12 +18,15 @@
     <div style="margin-left:20% ;margin-Right:20% ;margin-top: 5%;">
         <div class="mb-3">
             <div>
-                <p>You uploaded : {{pdf_name}}</p>
-                <form action="/upload/Text" method="post">
-                    <button type="submit" class="btn btn-primary mb-3">Show Text</button>
+                <form action="/">
+                    <button type="submit" class="btn btn-primary mb-3">Go To Home </button>
                 </form>
-                <!-- <button type="submit" class="btn btn-primary mb-3">Play Audio</button> -->
             </div>
+            <br>
+            <h3 style="text-align: center;">{{pdf_name}}</h3>
+            <h5>{{heading}}</h5>
+            <!-- <input type="text" value="{{result}}" readonly> -->
+            <p>{{result}}</p>
         </div>
     </div>
 
@@ -48,5 +51,3 @@
         integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
         crossorigin="anonymous"></script>
 </body>
-
-</html>
