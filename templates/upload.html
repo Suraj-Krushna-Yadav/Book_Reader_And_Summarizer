@@ -17,13 +17,14 @@
 
     <div style="margin-left:20% ;margin-Right:20% ;margin-top: 5%;">
         <div class="mb-3">
-            <form action="/upload" method="post" enctype="multipart/form-data">
-                <label for="myfile" class="form-label"><h6>Choose and upload Your File !</h6></label>
-                <input class="form-control" type="file" id="myfile" name="myfile">
-                <br>
-                <button type="submit" class="btn btn-primary mb-3">Upload</button>
-                <h6>{{msg}}</h6>
-            </form>
+            <div>
+                <p>You uploaded : {{pdf_name}}</p>
+                <form action="/upload/Text" method="post">
+                    <button type="submit" class="btn btn-primary mb-3">Show Text</button>
+                <br><button type="submit" disabled class="btn btn-primary mb-3">Convert and Show Images</button>
+                <br><button type="submit" disabled class="btn btn-primary mb-3">Play Audio</button> 
+                </form>
+            </div>
         </div>
     </div>
 
