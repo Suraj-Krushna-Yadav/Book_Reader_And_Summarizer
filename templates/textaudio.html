@@ -17,13 +17,13 @@
 
     <div style="margin-left:20% ;margin-Right:20% ;margin-top: 5%;">
         <div class="mb-3">
-            <form action="/upload" method="post" enctype="multipart/form-data">
-                <label for="myfile" class="form-label"><h6>Choose and upload Your File !</h6></label>
-                <input class="form-control" type="file" id="myfile" name="myfile">
-                <br>
-                <button type="submit" class="btn btn-primary mb-3">Upload</button>
-                <h6>{{msg}}</h6>
-            </form>
+            <div>
+                <form action="/">
+                    <button type="submit" class="btn btn-primary mb-3">Go To Home </button>
+                </form>
+            </div>
+            <br>
+            <h3 style="text-align: center;">{{pdf_name}}</h3>
         </div>
     </div>
 
@@ -31,5 +31,3 @@
         integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
         crossorigin="anonymous"></script>
 </body>
-
-</html>

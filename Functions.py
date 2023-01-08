@@ -6,10 +6,11 @@ from pdf2image import convert_from_path
 import os
 import sqlite3
 
+"used"
 def cn():
     conn = sqlite3.connect('DATABASE.sqlite3')
     return conn
-
+"used"
 def create_null_db(): 
     conn = cn()
     conn.execute('''create table if not exists book(
@@ -33,13 +34,13 @@ def create_null_db():
                     ''')
     conn.commit()
     initialize_counter()
-
+"used"
 def initialize_counter():
     conn = cn()
     query = "INSERT INTO other(id,counter) VALUES(1,1);"
     conn.execute(query)
     conn.commit()
-
+"used"
 def get_counter():
     conn =cn()
     query = "select counter from other;"
@@ -50,10 +51,10 @@ def set_counter(val):
     query = "update other set counter = ? where id==1;"
     conn.execute(query,(val,))
     conn.commit()
-
+"used"
 def increment_counter():
     set_counter(get_counter()+1)
-
+"used"
 def fill_row(id,type,name,pg,no,img,txt):
     conn = cn()
     query = "insert into book(id,file_type,file_name,total_pgs,page_no,img_path,text_path) values(?,?,?,?,?,?,?);"
@@ -120,17 +121,15 @@ def ocr_text_extraction(img_path):
             op_file.write(res)
 
 
-
-def pdf2img2txt(pdf_path):
-    counter = get_counter()
-    pdf_name = pdf_path[14:-4]
-    full_text = ""
+"used"
+def pdf2img2txt(pdf_path):         # Dont change the name of path as function are 
+    pdf_name = pdf_path[14:-4]      # made according to len of path as here [14:-4]
+    full_text = ""       
 
     images = convert_from_path(pdf_path, poppler_path=r'C:\\poppler-0.68.0\bin')
     pytesseract.pytesseract.tesseract_cmd="C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
 
     no_img = len(images)
-
 
     for i in range(no_img):
         counter = get_counter()
@@ -152,24 +151,26 @@ def pdf2img2txt(pdf_path):
         fill_row(counter,"PDF",pdf_name,no_img,i+1,img_path,text_path)
         increment_counter()
         
+
     counter = get_counter()
+
     full_text_path = 'Resources\\TEXT\\'+pdf_name+'.txt'
     with Path(full_text_path).open('w', encoding = 'utf-8') as op_file:
         op_file.write(full_text)
     fill_row(counter,"PDF",pdf_name,no_img,0,"",full_text_path)
+
     increment_counter()
+
     return full_text
 
-
-
-
+"used"
 def validate_resources_directory():
     try :
         os.mkdir("Resources")
         validate_sub_resources_directory()
     except :
         validate_sub_resources_directory()
-
+"used"
 def validate_sub_resources_directory(): 
     entries = os.listdir("Resources\\")
     for sub_resource in "IMG",'PDF','TEXT','SUMMARY','AUDIO', "PROCESSED PDF":

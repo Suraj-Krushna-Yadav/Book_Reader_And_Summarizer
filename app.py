@@ -29,7 +29,7 @@ app.config["FILE_EXTENSION"] = ["PDF", ]
 @app.route('/')
 def start():
     return render_template('Index.html')
-    
+
 @app.route('/upload', methods=["POST", "GET"])
 def Home():
     if request.method == "POST":
@@ -39,40 +39,48 @@ def Home():
 
             if myFile.filename == "":
                 print("Must have filename")
-                return render_template('text.html', heading = "PDF not selected")
+                return render_template('Index.html',msg = "Please Choose File !")
+            
+            elif myFile.filename[-4:] != ".pdf":
+                return render_template('Index.html', msg = "It is not a PDF file, Choose only PDF file!")
            
             # saving  file to pdf location
+            try:
+                entries = os.listdir("Resources\\PDF\\")
+                for pdf in entries:
+                    os.remove("Resources\\PDF\\"+str(pdf))
+            except:
+                pass
             myFile.save(os.path.join(app.config["PDF_PATH"], myFile.filename))
+            global pdfname
+            pdfname = myFile.filename
+            global pdf_path
+            pdf_path = "Resources\\PDF\\"+str(pdfname)
 
             print("File uploaded sucessfully...")
             return redirect(request.url)
 
-    try:
-        entries = os.listdir("Resources\\PDF\\")
-        global pdfname
-        pdfname = entries[0]
-        # if ".pdf" in pdfname:type="PDF"
-        # elif ".img" in pdfname or "jpg" in pdfname or "jpeg" in pdfname or ".png" in pdfname: type = "IMG"
-        # elif ".txt" in pdfname : type = "TEXT"
-        # global counter
-        # fn.increment_counter()
-        # counter = fn.get_counter()
-        # fn.add_id_type_name(counter,type,pdfname)
-    except:
-        pdf = '----'
     return render_template('upload.html',pdf_name=pdfname)
 
 
 @app.route('/upload/Text', methods=['POST'])
 def show_text():
     try :
-        pdf_path = "Resources\\PDF\\"+str(pdfname)
         res = fn.pdf2img2txt(pdf_path)
-        shutil.move(pdf_path,"Resources\\PROCESSED PDF")
+        try:
+            shutil.move(pdf_path,"Resources\\PROCESSED PDF")
+        except:
+            pass
         return render_template('text.html', result = res, pdf_name = pdfname)
+
     except Exception as e:
-        print("Error during show text is\n",e)
-        return render_template('text.html', heading = "PDF not uploaded")
+        return render_template('fileerror.html', msg = e)
+
+
+@app.route('/upload/Text/audio', methods=['POST'])
+def play_audio():
+    return render_template('textaudio.html', pdf_name = pdfname)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
