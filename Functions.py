@@ -1,3 +1,4 @@
+# This Python file uses the following encoding: utf-8
 from pathlib import Path
 import pytesseract
 from PIL import Image
@@ -5,6 +6,8 @@ import PyPDF2 as p2
 from pdf2image import convert_from_path
 import os
 import sqlite3
+from gtts import gTTS
+
 
 "used"
 def cn():
@@ -55,10 +58,10 @@ def set_counter(val):
 def increment_counter():
     set_counter(get_counter()+1)
 "used"
-def fill_row(id,type,name,pg,no,img,txt):
+def fill_row(id,type,name,pg,no,img,txt,aud):
     conn = cn()
-    query = "insert into book(id,file_type,file_name,total_pgs,page_no,img_path,text_path) values(?,?,?,?,?,?,?);"
-    conn.execute(query,(id,type,name,pg,no,img,txt,))
+    query = "insert into book(id,file_type,file_name,total_pgs,page_no,img_path,text_path,audio_path) values(?,?,?,?,?,?,?,?);"
+    conn.execute(query,(id,type,name,pg,no,img,txt,aud,))
     conn.commit()
 
 def add_id_type_name(id,type,name):
@@ -122,7 +125,7 @@ def ocr_text_extraction(img_path):
 
 
 "used"
-def pdf2img2txt(pdf_path):         # Dont change the name of path as function are 
+def pdf2img2txt2aud(pdf_path):         # Dont change the name of path as function are 
     pdf_name = pdf_path[14:-4]      # made according to len of path as here [14:-4]
     full_text = ""       
 
@@ -148,7 +151,16 @@ def pdf2img2txt(pdf_path):         # Dont change the name of path as function ar
         text_path = 'Resources\\TEXT\\'+pdf_name+'-'+str(i)+'.txt'
         with Path(text_path).open('w', encoding = 'utf-8') as op_file:
             op_file.write(res)
-        fill_row(counter,"PDF",pdf_name,no_img,i+1,img_path,text_path)
+
+        try:
+            audio_path = 'Resources\\AUDIO\\'+pdf_name+'-'+str(i)+'.mp3'
+            obj = gTTS(text=res,slow=False,lang='en')
+            obj.save(audio_path)
+        except Exception as e:
+            print("\n\n Error is due to :\n\n",e,"\n\n")
+
+
+        fill_row(counter,"PDF",pdf_name,no_img,i+1,img_path,text_path,audio_path)
         increment_counter()
         
 
