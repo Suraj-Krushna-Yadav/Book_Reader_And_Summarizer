@@ -66,7 +66,7 @@ def Home():
 @app.route('/upload/Text', methods=['POST'])
 def show_text():
     try :
-        res = fn.pdf2img2txt(pdf_path)
+        res = fn.pdf2img2txt2aud(pdf_path)
         try:
             shutil.move(pdf_path,"Resources\\PROCESSED PDF")
         except:
