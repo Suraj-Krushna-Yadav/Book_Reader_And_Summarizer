@@ -58,7 +58,7 @@ def set_counter(val):
 def increment_counter():
     set_counter(get_counter()+1)
 "used"
-def fill_row(id,type,name,pg,no,img,txt,aud):
+def fill_row(id,type,name,pg,no,img,txt,aud=""):
     conn = cn()
     query = "insert into book(id,file_type,file_name,total_pgs,page_no,img_path,text_path,audio_path) values(?,?,?,?,?,?,?,?);"
     conn.execute(query,(id,type,name,pg,no,img,txt,aud,))
