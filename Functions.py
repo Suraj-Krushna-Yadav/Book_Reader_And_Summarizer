@@ -8,12 +8,17 @@ import os
 import sqlite3
 from gtts import gTTS
 
+# Paths 
+path_tesseract = "C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
+path_poppler = r'C:\\poppler-0.68.0\bin'
 
-"used"
+
+
 def cn():
     conn = sqlite3.connect('DATABASE.sqlite3')
     return conn
-"used"
+
+
 def create_null_db(): 
     conn = cn()
     conn.execute('''create table if not exists book(
@@ -37,100 +42,103 @@ def create_null_db():
                     ''')
     conn.commit()
     initialize_counter()
-"used"
+
+
 def initialize_counter():
     conn = cn()
     query = "INSERT INTO other(id,counter) VALUES(1,1);"
     conn.execute(query)
     conn.commit()
-"used"
+
+
 def get_counter():
     conn =cn()
     query = "select counter from other;"
     for i in conn.execute(query): return i[0]
+
 
 def set_counter(val):
     conn=cn()
     query = "update other set counter = ? where id==1;"
     conn.execute(query,(val,))
     conn.commit()
-"used"
+
+
 def increment_counter():
     set_counter(get_counter()+1)
-"used"
-def fill_row(id,type,name,pg,no,img,txt,aud):
+
+
+
+def fill_row(id,type,name,pg,no,img,txt,aud=""):
     conn = cn()
     query = "insert into book(id,file_type,file_name,total_pgs,page_no,img_path,text_path,audio_path) values(?,?,?,?,?,?,?,?);"
     conn.execute(query,(id,type,name,pg,no,img,txt,aud,))
     conn.commit()
 
-def add_id_type_name(id,type,name):
-    conn = cn()
-    query = "insert into book(id,file_type,file_name) values(?,?,?);"
-    conn.execute(query,(id,type,name,))
-    conn.commit()
 
-def add_total_pgs_pgno(total_no_pg,page_no,id):
-    conn = cn()
-    query = "update book set total_pgs = ?, page_no = ? where id == ?;"
-    conn.execute(query,(total_no_pg,page_no,id,))
-    conn.commit()
+# def add_id_type_name(id,type,name):
+#     conn = cn()
+#     query = "insert into book(id,file_type,file_name) values(?,?,?);"
+#     conn.execute(query,(id,type,name,))
+#     conn.commit()
 
-def add_img_path(img_path,id):
-    conn = cn()
-    query = "update book set img_path = ? where id == ?;"
-    conn.execute(query,(img_path,id,))
-    conn.commit()
+# def add_total_pgs_pgno(total_no_pg,page_no,id):
+#     conn = cn()
+#     query = "update book set total_pgs = ?, page_no = ? where id == ?;"
+#     conn.execute(query,(total_no_pg,page_no,id,))
+#     conn.commit()
 
-def add_text_path(text_path,id):
-    conn = cn()
-    query = "update book set text_path = ? where id == ?;"
-    conn.execute(query,(text_path,id,))
-    conn.commit()
+# def add_img_path(img_path,id):
+#     conn = cn()
+#     query = "update book set img_path = ? where id == ?;"
+#     conn.execute(query,(img_path,id,))
+#     conn.commit()
 
-
-def binary_extraction(pdf_path):
-    pdf2 = p2.PdfFileReader(pdf_path)   # Using PyPDF2 for Text Extraction
-    pdf_name = pdf_path[13:-4]
-    with Path('Resources\\TEXT\\'+pdf_name+'.txt').open('w') as op_file:
-        text=''
-        for page in pdf2.pages:
-            text += page.extractText()
-        op_file.write(text)
+# def add_text_path(text_path,id):
+#     conn = cn()
+#     query = "update book set text_path = ? where id == ?;"
+#     conn.execute(query,(text_path,id,))
+#     conn.commit()
 
 
+# def binary_extraction(pdf_path):
+#     pdf2 = p2.PdfFileReader(pdf_path)   # Using PyPDF2 for Text Extraction
+#     pdf_name = pdf_path[13:-4]
+#     with Path('Resources\\TEXT\\'+pdf_name+'.txt').open('w') as op_file:
+#         text=''
+#         for page in pdf2.pages:
+#             text += page.extractText()
+#         op_file.write(text)
 
 
-def pdf2img(pdf_path):
-    # Store Pdf with convert_from_path function
-    images = convert_from_path(pdf_path, poppler_path=r'C:\\poppler-0.68.0\bin')
-    pdf_name = pdf_path[13:-4]
-    for i in range(len(images)):
-        # Save pages as images in the pdf
-        images[i].save('Resources\\IMG\\'+pdf_name+'-'+str(i)+'.jpg','JPEG')
+# def pdf2img(pdf_path):
+#     # Store Pdf with convert_from_path function
+#     images = convert_from_path(pdf_path, poppler_path=path_poppler)
+#     pdf_name = pdf_path[13:-4]
+#     for i in range(len(images)):
+#         # Save pages as images in the pdf
+#         images[i].save('Resources\\IMG\\'+pdf_name+'-'+str(i)+'.jpg','JPEG')
+
+
+# def ocr_text_extraction(img_path):
+#     img_name = img_path[13:-4]
+#     img = Image.open(img_path)
+#     pytesseract.pytesseract.tesseract_cmd = path_tesseract
+
+#     res = pytesseract.image_to_string(img)              # for english
+#     #res = pytesseract.image_to_string(img, lang="hin") # for hindi
+
+#     with Path('Resources\\TEXT\\'+img_name+'.txt').open('w', encoding = 'utf-8') as op_file:
+#             op_file.write(res)
 
 
 
-
-def ocr_text_extraction(img_path):
-    img_name = img_path[13:-4]
-    img = Image.open(img_path)
-    pytesseract.pytesseract.tesseract_cmd="C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
-
-    res = pytesseract.image_to_string(img)              # for english
-    #res = pytesseract.image_to_string(img, lang="hin") # for hindi
-
-    with Path('Resources\\TEXT\\'+img_name+'.txt').open('w', encoding = 'utf-8') as op_file:
-            op_file.write(res)
-
-
-"used"
 def pdf2img2txt2aud(pdf_path):         # Dont change the name of path as function are 
     pdf_name = pdf_path[14:-4]      # made according to len of path as here [14:-4]
     full_text = ""       
 
-    images = convert_from_path(pdf_path, poppler_path=r'C:\\poppler-0.68.0\bin')
-    pytesseract.pytesseract.tesseract_cmd="C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
+    images = convert_from_path(pdf_path, poppler_path = path_poppler)
+    pytesseract.pytesseract.tesseract_cmd = path_tesseract
 
     no_img = len(images)
 
@@ -175,16 +183,19 @@ def pdf2img2txt2aud(pdf_path):         # Dont change the name of path as functio
 
     return full_text
 
-"used"
+
 def validate_resources_directory():
     try :
         os.mkdir("Resources")
         validate_sub_resources_directory()
     except :
         validate_sub_resources_directory()
-"used"
+
+
 def validate_sub_resources_directory(): 
     entries = os.listdir("Resources\\")
     for sub_resource in "IMG",'PDF','TEXT','SUMMARY','AUDIO', "PROCESSED PDF":
         if sub_resource not in entries:
             os.mkdir("Resources\\"+str(sub_resource))
+
+            
