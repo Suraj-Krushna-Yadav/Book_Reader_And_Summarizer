@@ -55,9 +55,12 @@ def Home():
                     os.remove("Resources\\PDF\\"+str(pdf))
             except:
                 pass
+
             myFile.save(os.path.join(app.config["PDF_PATH"], myFile.filename))
+
             global pdfname
             pdfname = myFile.filename
+
             global pdf_path
             pdf_path = "Resources\\PDF\\"+str(pdfname)
 
@@ -78,7 +81,7 @@ def show_text():
         return render_template('text.html', result = res, pdf_name = pdfname)
 
     except Exception as e:
-        return render_template('fileerror.html', msg = e)
+        return render_template('fileerror.html', msg = "show_text() produced error due to -\n"+str(e))
 
 
 @app.route('/upload/Text/audio', methods=['POST'])
