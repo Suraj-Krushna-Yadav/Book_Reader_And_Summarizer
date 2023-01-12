@@ -43,10 +43,10 @@ def Home():
 
             if myFile.filename == "":
                 print("Must have filename")
-                return render_template('Index.html',msg = "Please Choose File !")
+                return render_template('home.html',msg = "Please Choose File !")
             
             elif myFile.filename[-4:] != ".pdf":
-                return render_template('Index.html', msg = "It is not a PDF file, Choose only PDF file!")
+                return render_template('home.html', msg = "It is not a PDF file, Choose only PDF file!")
            
             # saving  file to pdf location
             try:
