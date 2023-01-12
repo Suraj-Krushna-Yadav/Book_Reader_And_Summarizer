@@ -43,35 +43,27 @@
     <header class="masthead">
         <div class="container">
             <div>
-                <div>
-                    <div style="margin-left:20% ;margin-Right:20% ;text-align: center;">
-                        <!-- As a heading -->
-                        <h1>Book reader and summarizer</h1>
-                    </div>
-
-                    <div style="margin-left:20% ;margin-Right:20% ;margin-top: 5%;">
-                        <div class="mb-3">
-                            <div>
-                                <form action="/">
-                                    <button type="submit" class="btn btn-primary mb-3">Try Another</button>
-                                </form>
-                            </div>
-                            <br>
-                            <h3 style="text-align: center;">{{pdf_name}}</h3>
-                            <h5>{{heading}}</h5>
-                            <!-- <input type="text" value="{{result}}" readonly> -->
-                            <p>{{result}}</p>
-                        </div>
-                    </div>
-
+                <div style="margin-left:20% ;margin-Right:20% ;text-align: center;">
+                    <!-- As a heading -->
+                    <h1>Book reader and summarizer</h1>
                 </div>
 
-
+                <div style="margin-left:20% ;margin-Right:20% ;margin-top: 5%;">
+                    <div class="mb-3">
+                        <div>
+                            <form action="/home">
+                                <button type="submit" class="btn btn-primary mb-3">Try Another</button>
+                            </form>
+                            <form action="/upload/Text/audio" method="post">
+                                <button type="submit" disabled class="btn btn-primary mb-3">Play Audio</button>
+                            </form>
+                        </div>
+                        <br>
+                        <h3 style="text-align: center;">{{pdf_name}}</h3>
+                        <p>{{result}}</p>
+                    </div>
+                </div>
             </div>
-
-            <!-- <div class="masthead-subheading">Welcome</div>
-            <div class="masthead-heading text-uppercase">It's Nice To Meet You</div> -->
-            <!-- <a class="btn btn-primary btn-xl text-uppercase" href="/home.html">Let's get started</a> -->
         </div>
     </header>
 
