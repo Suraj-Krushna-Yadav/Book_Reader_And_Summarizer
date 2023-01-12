@@ -52,18 +52,12 @@
                     <div style="margin-left:20% ;margin-Right:20% ;margin-top: 5%;">
                         <div class="mb-3">
                             <form action="/upload" method="post" enctype="multipart/form-data">
-                                <label for="myfile" class="form-label">Default file input example</label>
+                                <label for="myfile" class="form-label"><h6>Choose and upload Your File !</h6></label>
                                 <input class="form-control" type="file" id="myfile" name="myfile">
                                 <br>
                                 <button type="submit" class="btn btn-primary mb-3">Upload</button>
+                                <h6>{{msg}}</h6>
                             </form>
-                            <div>
-                                <form action="/upload/Text" method="post">
-                                    <button type="submit" class="btn btn-primary mb-3">Show Text</button>
-                                </form>
-                                <p>OR</p>
-                                <button type="submit" class="btn btn-primary mb-3">Play Audio</button>
-                            </div>
                         </div>
                     </div>
 
