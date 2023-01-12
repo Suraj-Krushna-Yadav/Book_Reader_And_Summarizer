@@ -30,6 +30,10 @@ app.config["FILE_EXTENSION"] = ["PDF", ]
 def start():
     return render_template('Index.html')
 
+@app.route('/home', methods=["POST", "GET"])
+def home():
+    return render_template('home.html') 
+
 @app.route('/upload', methods=["POST", "GET"])
 def Home():
     if request.method == "POST":
