@@ -51,16 +51,19 @@
 
                     <div style="margin-left:20% ;margin-Right:20% ;margin-top: 5%;">
                         <div class="mb-3">
+                            <form action="/upload" method="post" enctype="multipart/form-data">
+                                <label for="myfile" class="form-label">Default file input example</label>
+                                <input class="form-control" type="file" id="myfile" name="myfile">
+                                <br>
+                                <button type="submit" class="btn btn-primary mb-3">Upload</button>
+                            </form>
                             <div>
-                                <form action="/">
-                                    <button type="submit" class="btn btn-primary mb-3">Try Another</button>
+                                <form action="/upload/Text" method="post">
+                                    <button type="submit" class="btn btn-primary mb-3">Show Text</button>
                                 </form>
+                                <p>OR</p>
+                                <button type="submit" class="btn btn-primary mb-3">Play Audio</button>
                             </div>
-                            <br>
-                            <h3 style="text-align: center;">{{pdf_name}}</h3>
-                            <h5>{{heading}}</h5>
-                            <!-- <input type="text" value="{{result}}" readonly> -->
-                            <p>{{result}}</p>
                         </div>
                     </div>
 
